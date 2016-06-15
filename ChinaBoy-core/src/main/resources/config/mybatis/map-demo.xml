@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo">
+
+	<insert id="insertDemo" parameterType="DemoPojo">
+		insert into DEMO (id,amount,remark,createdate)
+		values (#{id},#{amount},#{remark},#{createDate})
+	</insert>
+
+	<update id="updateDemo" parameterType="DemoPojo">
+		update DEMO set
+		createdate = #{createDate}
+	</update>
+
+	<delete id="deleteDemo">
+		delete from DEMO
+	</delete>
+	
+	<select id="selectDemo" resultType="DemoPojo">
+		select * from DEMO
+	</select>
+
+</mapper>
