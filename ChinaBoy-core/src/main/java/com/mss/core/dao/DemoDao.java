@@ -25,7 +25,7 @@ public class DemoDao {
 	 * 添加demo
 	 * @param demoPojo
 	 */
-	public void addDemo(DemoPojo demoPojo){
+	public synchronized void addDemo(DemoPojo demoPojo){
 		DemoPojo dp = new DemoPojo();
 		dp.setAmount(new BigDecimal(System.currentTimeMillis()));
 		dp.setCreateDate(new Date());
