@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 1124
-=======
-112
->>>>>>> branch 'master' of https://github.com/zhangtchina/ChinaBoy.git
