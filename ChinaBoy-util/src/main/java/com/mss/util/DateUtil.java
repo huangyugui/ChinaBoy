@@ -14,7 +14,7 @@ import java.util.Date;
 public class DateUtil {
 
 	public static void main(String[] args) throws Exception{
-		System.out.println(getWeek("20140907","yyyyMMdd"));
+		System.out.println(formatDate(new Date(),"yyyyMMddHHmmssSSS"));
 	}
 	
 	/**
