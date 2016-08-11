@@ -34,17 +34,17 @@
 	</properties>
 	
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找  -->
-	<repositories>
+	<!-- <repositories>
 		<repository>
 			<id>Nexus</id>
 			<name>Nexus</name>
-			<url>http://192.168.1.110:8081/nexus/content/groups/public/</url>
+			<url>http://192.168.1.110:8081/nexus/content/groups/public/</url> -->
 			<!-- 是否启用资源库中快照版本 -->
-			<snapshots>
+			<!-- <snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories> -->
 
 	<!-- 定义子类依赖,子类需要指明groupId,artifactId来选择依赖,不指明不依赖(不是全部依赖),
 		version,scope在父类中定义
@@ -131,7 +131,19 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>4.2.6.RELEASE</version>
 			</dependency>
-		    
+			
+			<!-- spring security -->
+		    <dependency>
+		        <groupId>org.springframework.security</groupId>
+		        <artifactId>spring-security-web</artifactId>
+		        <version>4.1.1.RELEASE</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.springframework.security</groupId>
+			    <artifactId>spring-security-config</artifactId>
+			    <version>4.1.1.RELEASE</version>
+			</dependency>
+			
 		    <!-- mybatis -->
 		    <dependency>
 			    <groupId>org.mybatis</groupId>

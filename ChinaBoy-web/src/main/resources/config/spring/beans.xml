@@ -16,5 +16,6 @@
 	<context:property-placeholder location="classpath:config.properties" />
 	
 	<import resource="beans-dubbo.xml"/>
+	<import resource="beans-security.xml"/>
 
 </beans>

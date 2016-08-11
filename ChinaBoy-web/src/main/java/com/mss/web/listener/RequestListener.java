@@ -11,12 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * 
- * 网关request监听器
+ * 描述：网关request监听器
  * 
  * @author zt
- * @version 20160304
- *
+ * @version 1.0
+ * @date 2016-03-04
  */
 public class RequestListener implements ServletRequestAttributeListener,
 		ServletRequestListener {
@@ -42,9 +41,9 @@ public class RequestListener implements ServletRequestAttributeListener,
 			sbHeader.append("\n");
 			sbHeader.append("##################################################");
 			sbHeader.append("\n");
-			sbHeader.append("##########美易房接收请求,url={"+req.getServletPath()+"}");
+			sbHeader.append("##########接收请求,url={"+req.getServletPath()+"}");
 			sbHeader.append("\n");
-			sbHeader.append("##########美易房接收请求,报文头信息={");
+			sbHeader.append("##########接收请求,报文头信息={");
 			sbHeader.append("\n");
 			while(enumHeader.hasMoreElements()){
 				String key = enumHeader.nextElement();
@@ -57,7 +56,7 @@ public class RequestListener implements ServletRequestAttributeListener,
 			//获取请求的所有参数信息并打印
 			Enumeration<String> enumParam = req.getParameterNames();
 			StringBuffer sbParam = new StringBuffer();
-			sbParam.append("##########美易房接收请求,参数信息={");
+			sbParam.append("##########接收请求,参数信息={");
 			sbParam.append("\n");
 			while(enumParam.hasMoreElements()){
 				String key = enumParam.nextElement();
@@ -74,26 +73,23 @@ public class RequestListener implements ServletRequestAttributeListener,
 			logger.info(new String(sbHeader));
 			
 		}catch(Exception e){
-			logger.info("##########美易房接收请求异常,信息={"+e.getMessage()+"}");
+			logger.info("##########接收请求异常,信息={"+e.getMessage()+"}");
 		}
 		
 	}
 
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void attributeRemoved(ServletRequestAttributeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void attributeReplaced(ServletRequestAttributeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 
