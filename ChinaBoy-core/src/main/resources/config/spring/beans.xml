@@ -70,4 +70,5 @@
 	<!--======= 事务配置 End =================== -->
 
 	<import resource="beans-dubbo.xml"/>
+	<import resource="beans-cache.xml"/>
 </beans>

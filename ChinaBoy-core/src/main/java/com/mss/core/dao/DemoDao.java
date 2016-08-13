@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mss.pojo.DemoPojo;
@@ -21,6 +22,9 @@ public class DemoDao {
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 	
+	@Autowired
+	private RedisTemplate redisTemplate;
+	
 	/**
 	 * 添加demo
 	 * @param demoPojo
@@ -32,12 +36,15 @@ public class DemoDao {
 		dp.setId(new Integer((int)System.currentTimeMillis()));
 		dp.setRemark(System.currentTimeMillis()+"");
 		sessionTemplate.insert("demo.insertDemo", dp);
+		redisTemplate.opsForHash().put("DemoPojo"+dp.hashCode(), "id",dp.getId().toString());
+		redisTemplate.opsForHash().put("DemoPojo"+dp.hashCode(), "amount",dp.getAmount().toString());
+		redisTemplate.opsForHash().put("DemoPojo"+dp.hashCode(), "remark",dp.getRemark());
 	}
 	
 	/**
 	 * 修改demo
 	 */
-	public void updateDemo(DemoPojo demoPojo){
+	public synchronized void updateDemo(DemoPojo demoPojo){
 		DemoPojo dp = new DemoPojo();
 		dp.setCreateDate(new Date());
 		sessionTemplate.insert("demo.updateDemo", dp);
@@ -48,6 +55,7 @@ public class DemoDao {
 	 */
 	public void deleteDemo(){
 		sessionTemplate.insert("demo.deleteDemo");
+		redisTemplate.delete(redisTemplate.keys("DemoPojo*"));
 	}
 	
 	/**
