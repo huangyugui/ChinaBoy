@@ -13,17 +13,22 @@
 	-->
 	<http auto-config="true" use-expressions="false">
 		<!-- 定义自定义登录页面以及登录url，以及用户名与密码参数名称 
-			login-page="//toLogin.htm" 登录页面action
-			login-processing-url="/login.htm" 登录跳转对应spring security
+			login-page="/toLogin.htm" 自定义登录页面action,默认
+			login-processing-url="/login" 自定义登录验证跳转,默认
 		-->
-		<form-login login-page="/toLogin.htm" login-processing-url="/login.htm" 
+		<form-login login-page="/toLogin.htm" login-processing-url="/login" 
 		username-parameter="username" password-parameter="password"
 		/>
 		
 		<!-- 禁用CSRF,否则请求需要相应的参数 -->
 		<csrf disabled="true"/>
 		
-		<!-- 匿名用户可以访问 -->
+		<!-- 登出处理,默认是/j_spring_security_logout -->
+		<logout logout-url="/logout" logout-success-url="/toLogin.htm"/>
+		
+		<!-- 设置不添加过滤url-->
+		<!-- <intercept-url pattern="/toLogin.htm" filters="none"/> -->
+		
 		<intercept-url pattern="/**" access="ROLE_USER"/>
 	</http>
 	

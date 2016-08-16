@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	<div style="text-align: center;margin-top: 10%">
-		<form action="login.htm" method="post">	
+		<form action="login" method="post">	
 			用户名：<input name="username" value="sky"/>
 			密码：<input name="password" value="sky"/>
 			<input type="submit" value="登录"/>
