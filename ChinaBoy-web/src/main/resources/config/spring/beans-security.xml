@@ -13,8 +13,8 @@
 	-->
 	<http auto-config="true" use-expressions="false">
 		<!-- 定义自定义登录页面以及登录url，以及用户名与密码参数名称 
-			login-page="/login.jsp" 登录页面
-			login-processing-url="/login.htm" 登录
+			login-page="//toLogin.htm" 登录页面action
+			login-processing-url="/login.htm" 登录跳转对应spring security
 		-->
 		<form-login login-page="/toLogin.htm" login-processing-url="/login.htm" 
 		username-parameter="username" password-parameter="password"
