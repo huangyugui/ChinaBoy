@@ -24,7 +24,12 @@
 		<listener-class>com.mss.web.listener.RequestListener</listener-class>
 	</listener>
 	
-	<!-- 编码过滤器 -->
+	<!-- 防止内存泄露 -->   
+	<listener>   
+	<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
+	</listener>
+	
+	<!-- 编码过滤器,所有过滤器之前 -->
 	<filter>  
         <filter-name>encodingFilter</filter-name>  
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  

@@ -88,6 +88,11 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>jstl</artifactId>
+		</dependency>
+			
+		<dependency>
 			<groupId>ChinaBoy</groupId>
 			<artifactId>ChinaBoy-facade</artifactId>
 			<version>${project.version}</version>
