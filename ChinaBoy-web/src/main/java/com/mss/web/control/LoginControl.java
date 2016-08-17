@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Scope("prototype")
 public class LoginControl extends BaseControl{
-
+			
 	@RequestMapping(value="/toLogin")
 	public String toLogin(){
 		return "login";

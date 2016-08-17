@@ -27,6 +27,7 @@ public class DemoControl extends BaseControl{
 	
 	@RequestMapping(value="/addDemo")
 	public void addDemo(){
+		getCurrentUsername();
 		demoService.addDemo(null);
 	}
 	
