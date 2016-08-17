@@ -29,9 +29,9 @@
 		<!-- 设置不添加过滤url-->
 		<!-- <intercept-url pattern="/toLogin.htm" filters="none"/> -->
 		
-		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER"/>
+		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" requires-channel="http"/>
+		
 	</http>
-	
 	
 	<authentication-manager>
 		<authentication-provider>
@@ -43,6 +43,10 @@
 			<!-- <user-service properties="classpath:security-users.properties"/> -->
 			<!-- 用户信息保存在数据库中 -->
 			<jdbc-user-service data-source-ref="dataSource"/>
+			<!-- 应用密码加密,salt密码作料可以为常量system-wide，也可以为UserDetail属性 -->
+			<!-- <password-encoder hash="md5" base64="true">
+				<salt-source user-property="username"/>
+			</password-encoder> -->
 		</authentication-provider>
 	</authentication-manager>
 
