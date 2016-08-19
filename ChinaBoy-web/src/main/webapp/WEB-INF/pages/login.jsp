@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<form action="login" method="post">	
 			用户名：<input name="username" value="sky"/>
 			密码：<input name="password" value="sky"/>
+			记住登录：<input name="spring_security_remember_me" type="checkbox" value="on">
 			<input type="submit" value="登录"/>
 			<input type="reset" value="重置"/>
 		</form>

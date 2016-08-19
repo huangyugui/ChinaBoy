@@ -7,8 +7,8 @@
 	<!--登录页面不过滤 ,这种方式不会经过过滤器链-->
 	<http pattern="/toLogin.htm" security="none" />
 	
-	<!-- auto-config="true" 会自动建立登录页面,基本认证，登出处理 -->
-	<!-- use-expressions="true" 默认启用EL表达式,access="hasRole('ROLE_USER')"
+	<!-- auto-config="true" 会自动建立登录页面,基本认证，登出处理 
+		use-expressions="true" 默认启用EL表达式,access="hasRole('ROLE_USER')"
 		所以需要use-expressions="false" access="ROLE_USER"
 	-->
 	<http auto-config="true" use-expressions="false">
@@ -17,17 +17,52 @@
 			login-processing-url="/login" 自定义登录验证跳转,默认
 		-->
 		<form-login login-page="/toLogin.htm" login-processing-url="/login" 
-		username-parameter="username" password-parameter="password"
+			username-parameter="username" password-parameter="password"
+			authentication-success-handler-ref="authenticationSuccessHandler"
+			authentication-failure-handler-ref="authenticationFailureHandler"
 		/>
 		
 		<!-- 禁用CSRF,否则请求需要相应的参数 -->
 		<csrf disabled="true"/>
 		
-		<!-- 登出处理,默认是/j_spring_security_logout -->
-		<logout logout-url="/logout" logout-success-url="/toLogin.htm"/>
+		<!-- 登出处理,默认是/j_spring_security_logout 
+			   默认清除remember me的cookie以及持久化token记录
+		-->
+		<logout logout-url="/logout" logout-success-url="/toLogin.htm" invalidate-session="true"/>
+		
+		<!-- session管理 
+			session-fixation-protection session固定攻击保护默认migrateSession
+				migrateSession：用户登录后重新创建新session并将原session中所有属性copy到新session中
+				changeSessionId:与migrateSession功能一样,servlet3.1+以后使用
+				none:继续使用原session
+				newSession：表示重新创建一个新的session，但是不copy原session拥有的attribute
+			web.xml添加HttpSessionEventPublisher监听器
+			max-sessions同一用户只能登录一个终端,其他终端将被登出
+			error-if-maximum-exceeded="true" 如果超过最大登录限制,将拒绝登陆
+			expired-url 拒绝登录后的跳转url
+		-->
+		<session-management session-fixation-protection="migrateSession">
+			<concurrency-control max-sessions="1" expired-url="/toLogin.htm"/>
+		</session-management>
 		
 		<!-- 设置不添加过滤url-->
 		<!-- <intercept-url pattern="/toLogin.htm" filters="none"/> -->
+		
+		<!-- 记住用户登录token 
+			token-validity-seconds 有效时间(s)
+			remember-me-cookie auth cookie的key值
+			remember-me-parameter 登录checkbox参数名称,默认值on
+		-->
+		<remember-me data-source-ref="dataSource" 
+			token-validity-seconds="86400" 
+			remember-me-cookie="chinaboy_spring_security_token"
+			remember-me-parameter="spring_security_remember_me"/>
+		
+		<!-- 过滤器链,有顺序position是替换,before是默认过滤器之前,after默认过滤器之后 -->
+		<custom-filter ref="firstFilter" position="FIRST"/>
+		<custom-filter ref="beforeFilter" before="FORM_LOGIN_FILTER"/>
+		<custom-filter ref="afterFilter" after="FORM_LOGIN_FILTER"/>
+		<custom-filter ref="lastFilter" position="LAST"/>
 		
 		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" requires-channel="http"/>
 		

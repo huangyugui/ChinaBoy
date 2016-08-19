@@ -20,13 +20,19 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<!-- 请求报文打印监听器 -->
 	<listener>
 		<listener-class>com.mss.web.listener.RequestListener</listener-class>
 	</listener>
 	
+	<!-- spring security session监听器 -->
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	
 	<!-- 防止内存泄露 -->   
 	<listener>   
-	<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
 	</listener>
 	
 	<!-- 编码过滤器,所有过滤器之前 -->
