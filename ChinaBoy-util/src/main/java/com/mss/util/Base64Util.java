@@ -113,10 +113,5 @@ public class Base64Util {
 		}
 		return sb.toString().getBytes("iso8859-1");
 	}
-	
-	public static void main(String[] args) throws UnsupportedEncodingException{
-		String str = encode("中国".getBytes());
-		System.out.print(new String(decode(str)));
-	}
 
 }
