@@ -42,6 +42,8 @@
 	    <property name="maxTotal" value="8"/>
 	    <property name="maxWaitMillis" value="-1" />
 	    <property name="testOnBorrow" value="true" />
+	    <!-- 30s空闲逐出链接 -->
+	    <property name="timeBetweenEvictionRunsMillis" value="30000" />
     </bean> 
   
     <!-- sentinelConfig -->
