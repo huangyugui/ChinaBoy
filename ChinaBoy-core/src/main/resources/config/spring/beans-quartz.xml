@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	
+	<!-- #############定时执行方法############# -->
+	<!-- 指定调度模式 ,定时执行的类的方法-->
+	<bean id="myJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<!-- durability 表示任务完成之后是否依然保留到数据库，默认false   -->
+		<property name="durability" value="true" />
+		<!-- fail-over 是否重新执行非正常关闭的任务(存在于表QRTZ_FIRED_TRIGGERS),default=false -->
+		<property name="requestsRecovery" value="false" />
+		<!-- class类型,不是实体 -->
+		<property name="jobClass" value="com.mss.core.task.TestTask"/>
+		<property name="name" value="测试quartz集群"/>
+	</bean>
+
+	<!-- 定义触发时间 ,日期时间循环执行-->
+	<bean id="myJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	    <property name="name" value="测试quartz集群-日期时间循环"/>
+	    <property name="jobDetail" ref="myJobDetail"/>
+	    <property name="cronExpression">
+	       <!-- 秒,分,时,日,月,周,年(可为空) -->
+	       <value>10 * * * * ?</value> 
+	    </property> 
+	</bean>
+	<!-- 定义触发时间,固定时间循环执行 -->
+	<bean id="myJobSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="name" value="测试quartz集群-固定时间循环"/>
+		<property name="jobDetail" ref="myJobDetail" />
+		<!-- spring加载完成后执行延迟时间(ms) -->
+		<property name="startDelay" value="10000" />
+		<!-- 每次执行间隔时间(ms) -->
+		<property name="repeatInterval" value="60000" />
+	</bean>
+	
+	<!-- #############启动定时任务,并管理############ -->
+	<!-- 调度管理类如果将lazy-init='false'那么容器启动就会执行调度程序  -->
+	<bean id="task" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- quartz上下文中可以通过key(applicationContext)获取ApplicationContext -->
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<!-- quartz 配置文件 -->
+		<property name="configLocation" value="classpath:quartz.properties" />
+		<!-- 重写数据库中job信息,比如动态修改job信息,默认false -->
+		<property name="overwriteExistingJobs" value="true" />
+		<!-- 自动启动默认true,否则需要手动启动 -->
+		<property name="autoStartup" value="true" />
+		<!-- 启动延时(s)默认0 -->
+		<property name="startupDelay" value="180" />
+		<!-- 数据源配置,会覆盖配置文件quartz.properties中的数据源配置 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 事务配置 -->
+		<!-- <property name="transactionManager" value="txManager" /> -->
+		<property name="triggers">
+			<list>
+				<ref bean="myJobCronTrigger" />
+				<ref bean="myJobSimpleTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+</beans>

@@ -71,4 +71,6 @@
 
 	<import resource="beans-dubbo.xml"/>
 	<import resource="beans-cache.xml"/>
+	<import resource="beans-quartz.xml"/>
+	
 </beans>
