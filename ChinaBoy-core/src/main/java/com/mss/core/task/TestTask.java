@@ -19,14 +19,14 @@ public class TestTask extends QuartzJobBean {
 	
 	public static Log logger = LogFactory.getLog(TestTask.class);
 
+	public static void main(String[] args){
+		String s = "12.343";
+		System.out.println(new BigDecimal(s).toString());
+	}
+	
 	@Override
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
 		logger.info("------------------task start --------------------");
-	}
-	
-	public static void main(String[] args){
-		String s = "12.343";
-		System.out.println(new BigDecimal(s).toString());
 	}
 }

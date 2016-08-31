@@ -33,13 +33,13 @@ public class DemoServiceImpl implements DemoService {
 	}
 
 	@Override
-	public void removeDemo(DemoPojo demoPojo) {
-		demoDao.deleteDemo();
+	public List<DemoPojo> queryDemo(DemoPojo demoPojo) {
+		return demoDao.selectDemoList();
 	}
 
 	@Override
-	public List<DemoPojo> queryDemo(DemoPojo demoPojo) {
-		return demoDao.selectDemoList();
+	public void removeDemo(DemoPojo demoPojo) {
+		demoDao.deleteDemo();
 	}
 	
 	

@@ -42,15 +42,6 @@ public class DemoDao {
 	}
 	
 	/**
-	 * 修改demo
-	 */
-	public synchronized void updateDemo(DemoPojo demoPojo){
-		DemoPojo dp = new DemoPojo();
-		dp.setCreateDate(new Date());
-		sessionTemplate.insert("demo.updateDemo", dp);
-	}
-	
-	/**
 	 * 删除demo
 	 */
 	public void deleteDemo(){
@@ -64,5 +55,14 @@ public class DemoDao {
 	 */
 	public List<DemoPojo> selectDemoList(){
 		return sessionTemplate.selectList("demo.selectDemo");
+	}
+	
+	/**
+	 * 修改demo
+	 */
+	public synchronized void updateDemo(DemoPojo demoPojo){
+		DemoPojo dp = new DemoPojo();
+		dp.setCreateDate(new Date());
+		sessionTemplate.insert("demo.updateDemo", dp);
 	}
 }
