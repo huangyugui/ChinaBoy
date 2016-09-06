@@ -9,11 +9,12 @@
 	<!-- 网站描述 -->
 	<description>测试客户端</description>
 
+	<!-- classpath* 能够加载jar包中的配置文件 -->
 	<!-- context-param 元素用来设定web站台的环境参数(context), 它包含两个子元素:param-name和param-value.,如spring的典型配置 -->
 	<!-- 加载 Spring 的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:config/spring/beans.xml</param-value>
+		<param-value>classpath*:config/spring/beans*.xml</param-value>
 	</context-param>
 
 	<listener>

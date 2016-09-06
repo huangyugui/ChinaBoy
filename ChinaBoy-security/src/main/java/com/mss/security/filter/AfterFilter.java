@@ -1,4 +1,4 @@
-package com.mss.web.security.filter;
+package com.mss.security.filter;
 
 import java.io.IOException;
 
@@ -13,16 +13,16 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
- * 描述：spring security过滤器First
+ * 描述：测试spring security过滤器After
  * 
  * @author zt
  * @version 1.0
  * @date 2016-08-19
  */
 @Component
-public class FirstFilter implements Filter{
-	
-	private static Logger logger = Logger.getLogger(FirstFilter.class);
+public class AfterFilter implements Filter{
+
+	private static Logger logger = Logger.getLogger(AfterFilter.class);
 	
 	@Override
 	public void destroy() {
@@ -32,7 +32,7 @@ public class FirstFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain filterChain) throws IOException, ServletException {
-		logger.info("[spring security]-[filter]-First filter handle success!");
+		logger.info("[spring security]-[filter]-After filter handle success!");
 		filterChain.doFilter(request, response);
 	}
 
@@ -41,5 +41,5 @@ public class FirstFilter implements Filter{
 		
 	}
 	
-
+	
 }

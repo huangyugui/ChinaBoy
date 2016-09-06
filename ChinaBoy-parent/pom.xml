@@ -76,6 +76,14 @@
 				<type>jar</type>
 			</dependency>
 			
+			<!-- servlet -->
+			<dependency>
+			    <groupId>javax.servlet</groupId>
+			    <artifactId>javax.servlet-api</artifactId>
+			    <version>3.1.0</version>
+			    <scope>compile</scope>
+			</dependency>
+
 			<!-- spring-core -->
 			<dependency>
 		        <groupId>org.springframework</groupId>

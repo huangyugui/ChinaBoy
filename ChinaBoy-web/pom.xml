@@ -111,6 +111,12 @@
 		
 		<dependency>
 			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
 			<artifactId>ChinaBoy-util</artifactId>
 			<version>${project.version}</version>
 		</dependency>
