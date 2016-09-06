@@ -14,6 +14,6 @@
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 		
 	<!-- 用户服务接口 -->
-	<dubbo:reference interface="com.mss.facade.DemoService" id="demoService" />
+	<dubbo:reference interface="com.mss.facade.DemoFacadeService" id="demoFacadeService" />
 
 </beans>

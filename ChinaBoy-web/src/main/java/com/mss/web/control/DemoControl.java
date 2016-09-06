@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mss.pojo.DemoPojo;
-import com.mss.facade.DemoService;
+import com.mss.facade.DemoFacadeService;
 import com.mss.util.DateUtil;
 
 /**
@@ -23,29 +23,29 @@ import com.mss.util.DateUtil;
 public class DemoControl extends BaseControl{
 	
 	@Autowired
-	private DemoService demoService;
+	private DemoFacadeService demoFacadeService;
 	
 	@RequestMapping(value="/addDemo")
 	public void addDemo(){
 		getCurrentUsername();
-		demoService.addDemo(null);
+		demoFacadeService.addDemo(null);
 	}
 	
 	@RequestMapping(value="/modifyDemo")
 	public void modifyDemo(){
-		demoService.modifyDemo(null);
+		demoFacadeService.modifyDemo(null);
 	}
 	
 	@RequestMapping(value="/removeDemo")
 	public void removeDemo(){
-		demoService.removeDemo(null);
+		demoFacadeService.removeDemo(null);
 	}
 	
 	@RequestMapping(value="/queryDemo")
 	public void queryDemo(HttpServletResponse response) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		
-		List<DemoPojo> list = demoService.queryDemo(null);
+		List<DemoPojo> list = demoFacadeService.queryDemo(null);
 		for(DemoPojo demo:list){
 			sb.append(demo.getId()+"|");
 			sb.append(demo.getAmount()+"|");

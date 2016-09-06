@@ -17,6 +17,6 @@
 	<dubbo:protocol name="dubbo" port="20880" />
 		
 	<!-- 用户服务接口 -->
-	<dubbo:service interface="com.mss.facade.DemoService" ref="demoService" />
+	<dubbo:service interface="com.mss.facade.DemoFacadeService" ref="demoFacadeService" />
 
 </beans>

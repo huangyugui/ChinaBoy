@@ -9,7 +9,7 @@ import com.mss.pojo.DemoPojo;
  * @author zt
  * @version 20160531
  */
-public interface DemoService {
+public interface DemoFacadeService {
 
 	/**
 	 * 添加demo

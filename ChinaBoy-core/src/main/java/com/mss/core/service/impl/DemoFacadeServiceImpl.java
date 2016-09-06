@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.mss.dao.DemoDao;
-import com.mss.facade.DemoService;
+import com.mss.facade.DemoFacadeService;
 import com.mss.pojo.DemoPojo;
 
 /**
@@ -15,9 +15,9 @@ import com.mss.pojo.DemoPojo;
  * @author zt
  * @version 20160531
  */
-@Service("demoService")
+@Service("demoFacadeService")
 @Scope("singleton")
-public class DemoServiceImpl implements DemoService {
+public class DemoFacadeServiceImpl implements DemoFacadeService {
 
 	@Autowired
 	private DemoDao demoDao;
