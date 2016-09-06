@@ -3,11 +3,13 @@ package com.mss.util;
 import java.io.UnsupportedEncodingException;
 
 /**
+ * 
  * Base64编码工具类
+ * 
  * @author zt
  * @version 20140730
+ * 
  */
-
 public class Base64Util {
 
 	private static char[] base64EncodeChars = new char[] { 'A', 'B', 'C', 'D',

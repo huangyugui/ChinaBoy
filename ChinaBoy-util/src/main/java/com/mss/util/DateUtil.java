@@ -6,11 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * 
  * Date工具类
+ * 
  * @author zt
  * @version 20140903
+ * 
  */
-
 public class DateUtil {
 
 	public static void main(String[] args) throws Exception{

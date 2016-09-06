@@ -1,11 +1,13 @@
 package com.mss.util;
 
 /**
+ * 
  * String工具类
+ * 
  * @author zt
  * @version 20140829
+ * 
  */
-
 public class StringUtil {
 
 	/**

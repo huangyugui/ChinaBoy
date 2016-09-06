@@ -3,11 +3,13 @@ package com.mss.util;
 import java.text.DecimalFormat;
 
 /**
+ * 
  * Number工具类
+ * 
  * @author zt
  * @version 20140916
+ * 
  */
-
 public class NumberUtil {
 
 	public static void main(String[] args){
