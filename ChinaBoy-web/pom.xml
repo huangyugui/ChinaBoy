@@ -57,6 +57,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>jstl</artifactId>
+		</dependency>
 
 		<!-- dubbo -->
 	    <dependency>
@@ -76,22 +81,6 @@
 		<dependency>
 		    <groupId>com.101tec</groupId>
 		    <artifactId>zkclient</artifactId>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>druid</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>compile</scope>
-			<type>jar</type>
-		</dependency>
-			
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>jstl</artifactId>
 		</dependency>
 			
 		<dependency>
@@ -115,6 +104,12 @@
 		<dependency>
 			<groupId>ChinaBoy</groupId>
 			<artifactId>ChinaBoy-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-cache</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		

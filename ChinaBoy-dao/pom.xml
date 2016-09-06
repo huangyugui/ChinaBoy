@@ -11,10 +11,10 @@
 		<relativePath>../ChinaBoy-parent</relativePath>
 	</parent>
 
-	<artifactId>ChinaBoy-cache</artifactId>
+	<artifactId>ChinaBoy-dao</artifactId>
 	<packaging>jar</packaging>
 
-	<name>ChinaBoy-cache</name>
+	<name>ChinaBoy-dao</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -33,13 +33,31 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.springframework.data</groupId>
-		    <artifactId>spring-data-redis</artifactId>
+		<!-- mybatis -->
+	    <dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
 		</dependency>
+	    <dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		</dependency>
+		
+		<!-- druid -->
 		<dependency>
-		    <groupId>redis.clients</groupId>
-		    <artifactId>jedis</artifactId>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-beans</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		
 	</dependencies>
