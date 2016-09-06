@@ -112,6 +112,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

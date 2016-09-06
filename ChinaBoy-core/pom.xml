@@ -55,27 +55,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-
-		<!-- mybatis -->
-	    <dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis</artifactId>
-		</dependency>
-	    <dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis-spring</artifactId>
-		</dependency>
-		
-		<!-- druid -->
-		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>druid</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
 		
 		<!-- dubbo -->
 	    <dependency>
@@ -135,6 +114,12 @@
 		<dependency>
 			<groupId>ChinaBoy</groupId>
 			<artifactId>ChinaBoy-facade</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

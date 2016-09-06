@@ -260,11 +260,15 @@
 	
 	<!-- 聚合打包 -->
 	<modules>
-		<module>../ChinaBoy-web</module>
-		<module>../ChinaBoy-core</module>
-		<module>../ChinaBoy-util</module>
 		<module>../ChinaBoy-beans</module>
+		<module>../ChinaBoy-cache</module>
+		<module>../ChinaBoy-core</module>
+		<module>../ChinaBoy-dao</module>
 		<module>../ChinaBoy-facade</module>
+		<module>../ChinaBoy-mq</module>
+		<module>../ChinaBoy-security</module>
+		<module>../ChinaBoy-util</module>
+		<module>../ChinaBoy-web</module>
 	</modules>
 	
 </project>

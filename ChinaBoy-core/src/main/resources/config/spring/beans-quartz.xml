@@ -42,7 +42,7 @@
 		<!-- quartz上下文中可以通过key(applicationContext)获取ApplicationContext -->
 		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
 		<!-- quartz 配置文件 -->
-		<property name="configLocation" value="classpath:quartz.properties" />
+		<property name="configLocation" value="classpath:config/quartz.properties" />
 		<!-- 重写数据库中job信息,比如动态修改job信息,默认false -->
 		<property name="overwriteExistingJobs" value="true" />
 		<!-- 自动启动默认true,否则需要手动启动 -->

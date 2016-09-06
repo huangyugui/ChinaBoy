@@ -16,6 +16,9 @@
         <dependent-module archiveName="ChinaBoy-util-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChinaBoy-util/ChinaBoy-util">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="ChinaBoy-dao-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChinaBoy-dao/ChinaBoy-dao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="ChinaBoy-web"/>
         <property name="java-output-path" value="/ChinaBoy-web/target/classes"/>
     </wb-module>

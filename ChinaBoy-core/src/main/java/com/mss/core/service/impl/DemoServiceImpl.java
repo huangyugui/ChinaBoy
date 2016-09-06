@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.mss.core.dao.DemoDao;
-import com.mss.pojo.DemoPojo;
+import com.mss.dao.DemoDao;
 import com.mss.facade.DemoService;
+import com.mss.pojo.DemoPojo;
 
 /**
  * mybatis测试service实现
