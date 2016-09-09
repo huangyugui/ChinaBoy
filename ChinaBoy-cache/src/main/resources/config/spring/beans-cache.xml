@@ -11,19 +11,20 @@
     <!-- redisTemplate -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >
     	<property name="connectionFactory" ref="jedisConnectionFactory" />
+    	<!-- redisTemplate存取的时候自动对key与value进行序列化,默认JdkSerializationRedisSerializer,获取的时候自动进行反序列化-->
     	<!-- key序列化否则乱码 -->
     	<property name="KeySerializer">  
         	<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>  
       	</property>  
       	<!-- value序列化否则乱码 -->
       	<property name="ValueSerializer">  
-          	<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>  
+          	<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>  
       	</property>
       	<property name="HashKeySerializer">  
 		    <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>  
 		</property>
 		<property name="HashValueSerializer">  
-		    <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>  
+		    <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>  
 		</property>
     </bean>
   

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,7 +41,7 @@ public class RedisAction extends BaseControl{
 		demo.setAmount(new BigDecimal(System.currentTimeMillis()));
 		demo.setRemark(System.currentTimeMillis()+"");
 		demo.setCreateDate(new Date());
-		redisUtil.save(System.currentTimeMillis()+"", demo);
+		redisUtil.save(System.currentTimeMillis()+"", demo, 60, TimeUnit.SECONDS);
 	}
 	
 	@RequestMapping(value="/modifyDemoRedis")
@@ -59,7 +60,7 @@ public class RedisAction extends BaseControl{
 		Set<Serializable> set = redisUtil.keys("*");
 		for(Serializable s:set){
 			try{
-				DemoPojo demo = redisUtil.get((String)s, DemoPojo.class);
+				DemoPojo demo = redisUtil.get(s, DemoPojo.class);
 				sb.append(demo.getId()+"|");
 				sb.append(demo.getAmount()+"|");
 				sb.append(demo.getRemark()+"|");

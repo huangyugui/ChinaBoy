@@ -1,18 +1,13 @@
 package com.mss.cache;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-
-import com.mss.util.SerializeUtil;
 
 /**
  * 
@@ -29,71 +24,34 @@ public class RedisUtil {
 	private RedisTemplate<Serializable, Serializable> redisTemplate;
 	
 	/**
-	 * 存取key-value值
+	 * 创建缓存
 	 * @param key
 	 * @param value
-	 * @throws IOException
 	 */
-	public void save(final String key, Object value) throws IOException {
-
-		final byte[] vbytes = SerializeUtil.serialize(value);
-		redisTemplate.execute(new RedisCallback<Object>() {
-			@Override
-			public Object doInRedis(RedisConnection connection)
-					throws DataAccessException {
-				connection.set(redisTemplate.getStringSerializer().serialize(key), vbytes);
-				return null;
-			}
-		});
+	public void save(Serializable key, Serializable value){
+		redisTemplate.opsForValue().set(key, value);
 	}
 	
 	/**
-	 * 存取key-value值,并设置失效时间
+	 * 创建缓存并设置失效时间
 	 * @param key
 	 * @param value
-	 * @param seconds
-	 * @throws IOException
+	 * @param timeout
+	 * @param unit
 	 */
-	public void save(final String key, Object value, final long seconds) throws IOException {
-
-		final byte[] vbytes = SerializeUtil.serialize(value);
-		redisTemplate.execute(new RedisCallback<Object>() {
-			@Override
-			public Object doInRedis(RedisConnection connection)
-					throws DataAccessException {
-				connection.setEx(redisTemplate.getStringSerializer().serialize(key), seconds, vbytes);
-				return null;
-			}
-		});
+	public void save(Serializable key, Serializable value, long timeout, TimeUnit unit){
+		redisTemplate.opsForValue().set(key, value, timeout, unit);
 	}
-
+	
 	/**
-	 * 获取key-value值
+	 * 获取缓存
 	 * @param key
 	 * @param elementType
 	 * @return
-	 * @throws Exception
 	 */
-	public <T> T get(final String key, Class<T> elementType) throws Exception {
-		return redisTemplate.execute(new RedisCallback<T>() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public T doInRedis(RedisConnection connection)
-					throws DataAccessException {
-				byte[] keybytes = redisTemplate.getStringSerializer().serialize(key);
-				if (connection.exists(keybytes)) {
-					byte[] valuebytes = connection.get(keybytes);
-					T value;
-					try {
-						value = (T) SerializeUtil.deserialize(valuebytes);
-						return value;
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				return null;
-			}
-		});
+	@SuppressWarnings("unchecked")
+	public <T> T get(Serializable key, Class<T> elementType){
+		return (T) redisTemplate.opsForValue().get(key);
 	}
 	
 	/**
@@ -106,7 +64,7 @@ public class RedisUtil {
 	}
 	
 	/**
-	 * 通过patten删除key-value
+	 * 通过patten通配key删除缓存
 	 * @param patten
 	 */
 	public void delByPatten(String patten){
@@ -114,7 +72,7 @@ public class RedisUtil {
 	}
 	
 	/**
-	 * 通过集合删除key-value
+	 * 通过key集合删除缓存
 	 * @param keys
 	 */
 	public void delByCollection(Collection<Serializable> keys){
@@ -122,7 +80,7 @@ public class RedisUtil {
 	}
 	
 	/**
-	 * 通过key删除key-value
+	 * 通过key删除缓存
 	 * @param key
 	 */
 	public void delByKey(String key){
