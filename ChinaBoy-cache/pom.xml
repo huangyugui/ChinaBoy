@@ -42,5 +42,11 @@
 		    <artifactId>jedis</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 	</dependencies>
 </project>

@@ -17,7 +17,7 @@ import java.io.ObjectOutputStream;
  * @version 20160906
  * 
  */
-public class SerializationUtil {
+public class SerializeUtil {
 
     /**
      * 序列化
@@ -55,7 +55,7 @@ public class SerializationUtil {
      * @throws ClassNotFoundException
      * @throws Exception
      */
-    public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+    public static Object deserialize(byte[] bytes) throws Exception {
         if (bytes == null)
             return null;
         ByteArrayInputStream ais = null;
@@ -64,7 +64,7 @@ public class SerializationUtil {
             ais = new ByteArrayInputStream(bytes);
             ObjectInputStream ois = new ObjectInputStream(ais);
             return ois.readObject();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw e;
         } finally {
             if (ais != null)
