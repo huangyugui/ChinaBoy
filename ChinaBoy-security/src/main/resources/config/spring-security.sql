@@ -5,27 +5,28 @@
 --如果一个用户有多个角色,不要将多个角色放在一起用逗号隔开.而是每个角色定义一条记录(例如:abu有ROLE_ADMIN,ROLE_USER两个角色,
 --那么应该定义两条记录: 一条为abu, ROLE_USER,另一条为abu, ROLE_ADMIN.而不是只有一条:abu, ROLE_ADMIN,ROLE_USER)
 --可以给authorities表添加一个id字段作为主键
-CREATE TABLE `users` (
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--spring security base table
+CREATE TABLE `USERS` (
+  `USERNAME` VARCHAR(50) NOT NULL,
+  `PASSWORD` VARCHAR(50) NOT NULL,
+  `ENABLED` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`USERNAME`)
+) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
-CREATE TABLE `authorities` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `authority` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ix_auth_username` (`username`,`authority`),
-  CONSTRAINT `fk_authorities_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `AUTHORITIES` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `USERNAME` VARCHAR(50) NOT NULL,
+  `AUTHORITY` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `IX_AUTH_USERNAME` (`USERNAME`,`AUTHORITY`),
+  CONSTRAINT `FK_AUTHORITIES_USERS` FOREIGN KEY (`USERNAME`) REFERENCES `USERS` (`USERNAME`)
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=UTF8;
 
 --spring security remember me token table
-CREATE TABLE `persistent_logins` (
-  `username` varchar(64) NOT NULL,
-  `series` varchar(64) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `last_used` datetime NOT NULL,
-  PRIMARY KEY (`series`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `PERSISTENT_LOGINS` (
+  `USERNAME` VARCHAR(64) NOT NULL,
+  `SERIES` VARCHAR(64) NOT NULL,
+  `TOKEN` VARCHAR(64) NOT NULL,
+  `LAST_USED` DATETIME NOT NULL,
+  PRIMARY KEY (`SERIES`)
+) ENGINE=INNODB DEFAULT CHARSET=UTF8;

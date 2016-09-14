@@ -22,6 +22,9 @@
         <dependent-module archiveName="ChinaBoy-cache-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChinaBoy-cache/ChinaBoy-cache">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="ChinaBoy-mq-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChinaBoy-mq/ChinaBoy-mq">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="ChinaBoy-web"/>
         <property name="java-output-path" value="/ChinaBoy-web/target/classes"/>
     </wb-module>

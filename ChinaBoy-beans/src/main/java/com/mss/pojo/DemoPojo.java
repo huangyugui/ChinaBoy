@@ -81,6 +81,11 @@ public class DemoPojo extends BasePojo{
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "DemoPojo [id=" + id + ", amount=" + amount + ", remark="
+				+ remark + ", createDate=" + createDate + "]";
+	}
 	
 	
 }

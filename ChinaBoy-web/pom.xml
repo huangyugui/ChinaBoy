@@ -113,6 +113,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-mq</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>
