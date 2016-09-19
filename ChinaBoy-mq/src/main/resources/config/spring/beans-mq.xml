@@ -30,7 +30,8 @@
 		<property name="pubSubNoLocal" value="false"/>
 		<!-- 默认目的地 -->
 		<property name="defaultDestination" ref="queueDestination"/>
-		<!-- <property name="messageConverter" value="true"/> -->
+		<!-- 默认失效时间为0,不失效-->
+		<property name="timeToLive" value="3"/>
 	</bean>
 	
 	<!-- Spring Topic JMS Template -->
@@ -40,7 +41,8 @@
 		<property name="pubSubNoLocal" value="true"/>
 		<!-- 默认目的地 -->
 		<property name="defaultDestination" ref="topicDestination"/>
-		<!-- <property name="messageConverter" value="true"/> -->
+		<!-- 默认失效时间为0,不失效-->
+		<property name="timeToLive" value="3"/>
 	</bean>
 	
 	<!-- 配置队列消息默认目的地 -->

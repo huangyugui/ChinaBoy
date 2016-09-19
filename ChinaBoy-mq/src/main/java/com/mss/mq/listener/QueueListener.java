@@ -26,7 +26,6 @@ public class QueueListener implements MessageListener {
 			}else{
 				System.out.println("QueueListener接收到[非Text类型]消息,消息类型："+message.getClass().toString());
 			}
-			throw new RuntimeException("x");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
