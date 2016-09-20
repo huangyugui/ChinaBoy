@@ -41,7 +41,7 @@ public class RequestListener implements ServletRequestAttributeListener,
 			sbHeader.append("\n");
 			sbHeader.append("##################################################");
 			sbHeader.append("\n");
-			sbHeader.append("##########接收请求,url={"+req.getServletPath()+"}");
+			sbHeader.append("##########接收请求,url={"+req.getRequestURL()+"}");
 			sbHeader.append("\n");
 			sbHeader.append("##########接收请求,报文头信息={");
 			sbHeader.append("\n");

@@ -20,28 +20,28 @@ import com.mss.util.DateUtil;
  */
 @RestController
 @Scope("prototype")
-public class DemoControl extends BaseControl{
+public class DubboControl extends BaseControl{
 	
 	@Autowired
 	private DemoFacadeService demoFacadeService;
 	
-	@RequestMapping(value="/addDemo")
+	@RequestMapping(value="/dubboAdd")
 	public void addDemo(){
 		getCurrentUsername();
 		demoFacadeService.addDemo(null);
 	}
 	
-	@RequestMapping(value="/modifyDemo")
+	@RequestMapping(value="/dubboModify")
 	public void modifyDemo(){
 		demoFacadeService.modifyDemo(null);
 	}
 	
-	@RequestMapping(value="/removeDemo")
+	@RequestMapping(value="/dubboRemove")
 	public void removeDemo(){
 		demoFacadeService.removeDemo(null);
 	}
 	
-	@RequestMapping(value="/queryDemo")
+	@RequestMapping(value="/dubboQuery")
 	public void queryDemo(HttpServletResponse response) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		

@@ -33,7 +33,7 @@ public class RedisAction extends BaseControl{
 	@Autowired
 	private RedisUtil redisUtil;
 	
-	@RequestMapping(value="/addDemoRedis")
+	@RequestMapping(value="/redisAdd")
 	public void addDemo() throws IOException{
 		getCurrentUsername();
 		DemoPojo demo = new DemoPojo();
@@ -44,17 +44,17 @@ public class RedisAction extends BaseControl{
 		redisUtil.save(System.currentTimeMillis()+"", demo, 60, TimeUnit.SECONDS);
 	}
 	
-	@RequestMapping(value="/modifyDemoRedis")
+	@RequestMapping(value="/redisModify")
 	public void modifyDemo(){
 		redisUtil.delByPatten("*");
 	}
 	
-	@RequestMapping(value="/removeDemoRedis")
+	@RequestMapping(value="/redisRemove")
 	public void removeDemo(){
 		redisUtil.delByPatten("*");
 	}
 	
-	@RequestMapping(value="/queryDemoRedis")
+	@RequestMapping(value="/redisQuery")
 	public void queryDemo(HttpServletResponse response) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		Set<Serializable> set = redisUtil.keys("*");

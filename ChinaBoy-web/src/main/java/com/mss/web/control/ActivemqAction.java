@@ -31,7 +31,7 @@ public class ActivemqAction extends BaseControl{
 	@Autowired
 	private TopicSender topicSender;
 	
-	@RequestMapping(value="/sendDemoActivemq")
+	@RequestMapping(value="/activemqSendDemo")
 	public void addDemo() throws IOException{
 		getCurrentUsername();
 		DemoPojo demo = new DemoPojo();
