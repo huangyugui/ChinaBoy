@@ -12,15 +12,19 @@
 		<property name="brokerURL" value="${activemq.broker.url}" />
 		<property name="userName" value="${activemq.username}" />
 		<property name="password" value="${activemq.password}" />
+		<!-- activemq默认异步发送,false为同步发送 -->
+		<property name="useAsyncSend" value="true" />
 	</bean>
 	
 	<!-- Spring Caching连接工厂 -->
  	<!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory -->  
 	<bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
 		<!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->  
-  		<constructor-arg ref="activemqConnectionFactory" />
+  		<property name="targetConnectionFactory" ref="activemqConnectionFactory"/>
   		<!-- Session缓存数量 -->
 		<property name="sessionCacheSize" value="${activemq.sessionCacheSize}" />
+  		<!-- 持久化订阅,clientId -->
+  		<property name="clientId" value="${activemq.clientId}" />
 	</bean>
 	
 	<!-- Spring Queue JMS Template -->
@@ -30,8 +34,14 @@
 		<property name="pubSubNoLocal" value="false"/>
 		<!-- 默认目的地 -->
 		<property name="defaultDestination" ref="queueDestination"/>
-		<!-- 默认失效时间为0,不失效-->
-		<property name="timeToLive" value="3"/>
+		<!-- 设置此属性true,deliveryMode,priority,timeToLive才会生效 -->
+		<property name="explicitQosEnabled" value="true"/>
+		<!-- 消息默认持久化2,这里设置不持久化 1,持久化意味着消息一定会送达不允许丢失-->
+		<property name="deliveryMode" value="2"/>
+		<!-- 优先级别0-9,0-4 是普通消息,5-9 是加急消息，但是不一定能够优先传递  -->
+		<property name="priority" value="4"/>
+		<!-- 默认失效时间为0不失效,(毫秒 ),对topic无效  -->
+		<!-- <property name="timeToLive" value="10000"/> -->
 	</bean>
 	
 	<!-- Spring Topic JMS Template -->
@@ -41,8 +51,14 @@
 		<property name="pubSubNoLocal" value="true"/>
 		<!-- 默认目的地 -->
 		<property name="defaultDestination" ref="topicDestination"/>
-		<!-- 默认失效时间为0,不失效-->
-		<property name="timeToLive" value="3"/>
+		<!-- 设置此属性true,deliveryMode,priority,timeToLive才会生效 -->
+		<property name="explicitQosEnabled" value="true"/>
+		<!-- 消息默认持久化2,这里设置不持久化 1,持久化意味着消息一定会送达不允许丢失-->
+		<property name="deliveryMode" value="2"/>
+		<!-- 优先级别0-9,9最大,默认4,但是不一定能够优先传递  -->
+		<property name="priority" value="4"/>
+		<!-- 默认失效时间为0不失效,(毫秒 ),对topic无效  -->
+		<property name="timeToLive" value="10000"/>
 	</bean>
 	
 	<!-- 配置队列消息默认目的地 -->
@@ -57,18 +73,30 @@
 
 	<!-- 消息消费者 start-->
 	
+	<!-- <bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/> -->
+	
 	<!-- 定义Queue Master监听器 -->
-	<jms:listener-container destination-type="queue" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+	<!-- acknowledge消息确认机制(session级别多条可能)queue与topic相同：
+		1.auto自动确认,不开启事务,抛异常RuntimeException也确认,session.recover()无效不会重发
+		2.client客户端确认message.acknowledge(),不开启事务,抛RuntimeException异常也确认,session.recover()会重发
+		3.dups-ok自动批量延时确认有重复消息可能,不开启事务,抛RuntimeException异常也确认,session.recover()无效不会重发
+		4.transacted开始事务,事务提交消息确认,事务回滚消息重发,抛RuntimeException异常消息重发
+		消息重发默认6次,算上第一次接收一共处理7次,如果还是未确认或者处理异常,默认持久化化消息移至死信队列ActiveMQ.DLQ,非持久化消息丢弃,当然也可配置移至死信队列
+	 -->
+	<jms:listener-container destination-type="queue" container-type="default" 
+		connection-factory="connectionFactory" acknowledge="auto">
 		<jms:listener destination="${activemq.queue.name}" ref="queueListener"/>
 	</jms:listener-container>
 	
 	<!-- 定义Topic Master监听器 -->
-	<jms:listener-container destination-type="topic" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
-		<jms:listener destination="${activemq.topic.name}" ref="topicListenerMaster"/>
-	</jms:listener-container>
-	<!-- 定义Topic Slave监听器 -->
-	<jms:listener-container destination-type="topic" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
-		<jms:listener destination="${activemq.topic.name}" ref="topicListenerSlave"/>
+	<!-- destination-type='topic'非持久化订阅 
+		 destination-type='durableTopic'持久化订阅 
+		 subscription与clientId唯一标识一个持久化订阅
+	-->
+	<jms:listener-container destination-type="durableTopic" container-type="default" 
+		connection-factory="connectionFactory" client-id="${activemq.clientId}" acknowledge="auto">
+		<jms:listener subscription="topic001" destination="${activemq.topic.name}" ref="topicListenerMaster"/>
+		<jms:listener subscription="topic002" destination="${activemq.topic.name}" ref="topicListenerSlave"/>
 	</jms:listener-container>
 	
 	<!-- 消息消费者 end -->
