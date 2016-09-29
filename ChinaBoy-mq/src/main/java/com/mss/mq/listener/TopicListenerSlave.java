@@ -25,6 +25,7 @@ public class TopicListenerSlave implements SessionAwareMessageListener<TextMessa
 		try {
 			System.out.println("TopicListenerSlave接收到[Text类型]消息:"+message.getText()+",通知次数:"+count++);
 			//session.recover();//该消息会被重新接收,默认重新接收6次
+			//session.commit();//事务提交,消息确认
 			//session.rollback();//事务回滚,消息被重新接收,默认重新接收6次
 			//throw new RuntimeException("测试异常是否回滚");//事务回滚,消息被重新接收,默认重新接收6次
 		} catch (JMSException e) {

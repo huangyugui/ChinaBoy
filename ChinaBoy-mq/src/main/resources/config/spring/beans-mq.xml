@@ -12,8 +12,10 @@
 		<property name="brokerURL" value="${activemq.broker.url}" />
 		<property name="userName" value="${activemq.username}" />
 		<property name="password" value="${activemq.password}" />
-		<!-- activemq默认异步发送,false为同步发送 -->
+		<!-- 默认异步发送,false为同步发送 -->
 		<property name="useAsyncSend" value="true" />
+		<!-- 异步发送时待确认消息的最大量(字节),超过则阻塞,1M -->
+		<property name="producerWindowSize" value="1024000" />
 	</bean>
 	
 	<!-- Spring Caching连接工厂 -->
@@ -40,8 +42,8 @@
 		<property name="deliveryMode" value="2"/>
 		<!-- 优先级别0-9,0-4 是普通消息,5-9 是加急消息，但是不一定能够优先传递  -->
 		<property name="priority" value="4"/>
-		<!-- 默认失效时间为0不失效,(毫秒 ),对topic无效  -->
-		<!-- <property name="timeToLive" value="10000"/> -->
+		<!-- 默认失效时间为0不失效(毫秒 ) -->
+		<property name="timeToLive" value="10000"/>
 	</bean>
 	
 	<!-- Spring Topic JMS Template -->
@@ -57,7 +59,7 @@
 		<property name="deliveryMode" value="2"/>
 		<!-- 优先级别0-9,9最大,默认4,但是不一定能够优先传递  -->
 		<property name="priority" value="4"/>
-		<!-- 默认失效时间为0不失效,(毫秒 ),对topic无效  -->
+		<!-- 默认失效时间为0不失效(毫秒 ),消息过期后持久化订阅会收不到消息 -->
 		<property name="timeToLive" value="10000"/>
 	</bean>
 	
@@ -72,9 +74,7 @@
 	</bean>
 
 	<!-- 消息消费者 start-->
-	
-	<!-- <bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/> -->
-	
+
 	<!-- 定义Queue Master监听器 -->
 	<!-- acknowledge消息确认机制(session级别多条可能)queue与topic相同：
 		1.auto自动确认,不开启事务,抛异常RuntimeException也确认,session.recover()无效不会重发
