@@ -28,7 +28,7 @@ import com.mss.util.DateUtil;
  */
 @RestController
 @Scope("prototype")
-public class RedisAction extends BaseControl{
+public class RedisControl extends BaseControl{
 
 	@Autowired
 	private RedisUtil redisUtil;

@@ -23,7 +23,7 @@ import com.mss.pojo.DemoPojo;
  */
 @RestController
 @Scope("prototype")
-public class ActivemqAction extends BaseControl{
+public class ActivemqControl extends BaseControl{
 	
 	@Autowired
 	private QueueSender queueSender;
