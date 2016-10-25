@@ -70,7 +70,7 @@
 		
 	</http>
 	
-	<authentication-manager>
+	<authentication-manager id="securityAuthenticationManager">
 		<authentication-provider>
 			<!-- 用户信息保存在内存InMemoryDaoImpl -->
 			<!-- <user-service>

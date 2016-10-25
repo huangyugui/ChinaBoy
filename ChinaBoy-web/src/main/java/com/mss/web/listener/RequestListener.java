@@ -68,7 +68,6 @@ public class RequestListener implements ServletRequestAttributeListener,
 			
 			
 			sbHeader.append(sbParam);
-			sbHeader.append("\n");
 			sbHeader.append("##################################################");
 			logger.info(new String(sbHeader));
 			
