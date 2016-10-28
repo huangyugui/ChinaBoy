@@ -13,17 +13,27 @@
 	<!-- 集群配置replica-set='192.168.110.110:27017,192.168.110.111:27017' -->
 	<mongo:mongo id="mongo" host="${mongodb.host}" port="${mongodb.port}" > 
 		<!-- 
-			connections-per-host连接池大小 ,超出大小则阻塞
+			connections-per-host 最大连接数,超过则线程阻塞直到获取连接
+			threads-allowed-to-block-for-connection-multiplier 线程队列数，它以上面
+				connections-per-host值相乘的结果就是线程队列最大值。如果连接线程排满了队列就会抛出
+				“Out of semaphores to get db”错误
+			max-wait-time 最大等待连接的线程阻塞时间(ms),0表示不等待,负数表示等待时间不确定
+			connectTimeout 连接超时的毫秒(ms)。0是默认和无限,推荐配置10,000
+			socket-timeout 此参数表示socket I/O读写超时时间(ms),推荐为不超时，即 0
+			socket-keep-alive 为防火墙设置的,保证socket存活,默认false。
+			auto-connect-retry 断线是否重连
+			max-auto-connect-retry-time 最大重连时间(ms)
+			slave-ok 是否允许在slave节点上读取数据,默认false
 		-->
 		<mongo:options 
 			connections-per-host="10" 
-            threads-allowed-to-block-for-connection-multiplier="4"
-            connect-timeout="1000" 
-            max-wait-time="1500" 
+            threads-allowed-to-block-for-connection-multiplier="5"
+            connect-timeout="10000" 
+            max-wait-time="120000" 
             auto-connect-retry="true"
 			max-auto-connect-retry-time="30000"
             socket-keep-alive="true" 
-            socket-timeout="1500" 
+            socket-timeout="0" 
             slave-ok="true"
             write-number="1" 
             write-timeout="0" 
