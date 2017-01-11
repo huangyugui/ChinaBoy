@@ -1,10 +1,14 @@
+*/run
+*/*/run
 */target
 */*/target
 /*.settings
 */*.settings
+*/*/*.settings
 /*.project
 */*.project
 /*.classpath
 */*.classpath
-/.idea
+.idea/
 *.iml
+dist/
