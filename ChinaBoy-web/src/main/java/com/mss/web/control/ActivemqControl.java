@@ -32,7 +32,7 @@ public class ActivemqControl extends BaseControl{
 	private TopicSender topicSender;
 	
 	@RequestMapping(value="/activemqSendDemo")
-	public void addDemo() throws IOException{
+	public void sendDemo() throws IOException{
 		getCurrentUsername();
 		DemoPojo demo = new DemoPojo();
 		demo.setId(new BigDecimal(System.currentTimeMillis()).intValue());

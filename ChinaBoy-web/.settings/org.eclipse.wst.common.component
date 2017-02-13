@@ -30,6 +30,9 @@
         <dependent-module archiveName="ChinaBoy-mongodb-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChinaBoy-mongodb/ChinaBoy-mongodb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="ChinaBoy-amqp-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChinaBoy-amqp/ChinaBoy-amqp">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="ChinaBoy-web"/>
         <property name="java-output-path" value="/ChinaBoy-web/target/classes"/>
     </wb-module>

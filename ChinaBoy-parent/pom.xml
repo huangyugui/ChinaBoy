@@ -153,6 +153,13 @@
 			    <version>5.14.0</version>
 			</dependency>
 			
+			<!-- Spring AMQP RabbitMQ  -->
+			<dependency>
+		        <groupId>org.springframework.amqp</groupId>
+		        <artifactId>spring-rabbit</artifactId>
+		        <version>1.7.0.RELEASE</version>
+		    </dependency>
+			
 			<!-- spring security -->
 		    <dependency>
 		        <groupId>org.springframework.security</groupId>
