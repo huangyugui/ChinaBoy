@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueueListener implements SessionAwareMessageListener<TextMessage> {
 
-	private static int count=0;
+	private static int count=1;
 	
 	@Override
 	public void onMessage(TextMessage message, Session session) throws JMSException {

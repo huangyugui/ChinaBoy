@@ -80,7 +80,7 @@
 		1.auto自动确认,不开启事务,抛异常RuntimeException也确认,session.recover()无效不会重发
 		2.client客户端确认message.acknowledge(),不开启事务,抛RuntimeException异常也确认,session.recover()会重发
 		3.dups-ok自动批量延时确认有重复消息可能,不开启事务,抛RuntimeException异常也确认,session.recover()无效不会重发
-		4.transacted开始事务,事务提交消息确认,事务回滚消息重发,抛RuntimeException异常消息重发
+		4.transacted开启事务,事务提交消息确认,事务回滚消息重发,抛RuntimeException异常消息重发
 		消息重发默认6次,算上第一次接收一共处理7次,如果还是未确认或者处理异常,默认持久化化消息移至死信队列ActiveMQ.DLQ,非持久化消息丢弃,当然也可配置移至死信队列
 	 -->
 	<jms:listener-container destination-type="queue" container-type="default" 
