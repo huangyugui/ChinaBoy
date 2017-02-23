@@ -8,7 +8,7 @@
            http://www.springframework.org/schema/rabbit/spring-rabbit-1.6.xsd">
 	
 	<!-- 定义amqp连接池工厂 -->
-	<rabbit:connection-factory id="amqpConnectionFactory" host="${amqp.host}" port="${amqp.port}" 
+	<rabbit:connection-factory id="amqpConnectionFactory" addresses="${amqp.addresses}" 
 		username="${amqp.username}" password="${amqp.password}" virtual-host="${amqp.virtualhost}" />
 	
 	<!-- 定义消息发送模板 -->
