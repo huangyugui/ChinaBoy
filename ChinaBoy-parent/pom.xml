@@ -294,15 +294,20 @@
 	
 	<!-- 聚合打包 -->
 	<modules>
+		<module>../ChinaBoy-amqp</module>
 		<module>../ChinaBoy-beans</module>
 		<module>../ChinaBoy-cache</module>
 		<module>../ChinaBoy-core</module>
 		<module>../ChinaBoy-dao</module>
 		<module>../ChinaBoy-facade</module>
+		<module>../ChinaBoy-fastdfs</module>
+		<module>../ChinaBoy-mongodb</module>
 		<module>../ChinaBoy-mq</module>
+		<module>../ChinaBoy-oauth2</module>
 		<module>../ChinaBoy-security</module>
 		<module>../ChinaBoy-util</module>
 		<module>../ChinaBoy-web</module>
+		<module>../ChinaBoy-zk</module>
 	</modules>
 	
 </project>
