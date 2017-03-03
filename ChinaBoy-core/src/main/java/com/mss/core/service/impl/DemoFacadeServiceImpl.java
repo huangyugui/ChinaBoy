@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.mss.dao.DemoDao;
+import com.mss.sharding.dao.DemoDao;
 import com.mss.facade.DemoFacadeService;
 import com.mss.pojo.DemoPojo;
 

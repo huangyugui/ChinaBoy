@@ -91,7 +91,7 @@
 		
 		<dependency>
 			<groupId>ChinaBoy</groupId>
-			<artifactId>ChinaBoy-dao</artifactId>
+			<artifactId>ChinaBoy-sharding</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
