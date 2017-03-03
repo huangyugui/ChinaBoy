@@ -264,6 +264,13 @@
 			    <version>2.2.1</version>
 			</dependency>
 			
+			<!-- dangdang sharding-jdbc -->
+			<dependency>
+				<groupId>com.dangdang</groupId>
+				<artifactId>sharding-jdbc-core</artifactId>
+				<version>1.4.1</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 	
@@ -305,6 +312,7 @@
 		<module>../ChinaBoy-mq</module>
 		<module>../ChinaBoy-oauth2</module>
 		<module>../ChinaBoy-security</module>
+		<module>../ChinaBoy-sharding</module>
 		<module>../ChinaBoy-util</module>
 		<module>../ChinaBoy-web</module>
 		<module>../ChinaBoy-zk</module>
