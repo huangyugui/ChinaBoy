@@ -16,8 +16,7 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.table.MultipleKeysTableSha
  * @version 20170306
  *
  */
-public class MultipleKeysTableSharding implements
-		MultipleKeysTableShardingAlgorithm {
+public class MultipleKeysTableSharding implements MultipleKeysTableShardingAlgorithm {
 
 	@Override
 	public Collection<String> doSharding(Collection<String> availableTargetNames,

@@ -16,9 +16,8 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.database.MultipleKeysDatab
  * @version 20170306
  *
  */
-public class MultipleKeyDatabaseSharding implements
-		MultipleKeysDatabaseShardingAlgorithm {
-
+public class MultipleKeyDatabaseSharding implements MultipleKeysDatabaseShardingAlgorithm {
+	
 	@Override
 	public Collection<String> doSharding(Collection<String> availableTargetNames,
 			Collection<ShardingValue<?>> shardingValues) {
