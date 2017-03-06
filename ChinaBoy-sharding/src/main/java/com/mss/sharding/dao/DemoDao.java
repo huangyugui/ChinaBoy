@@ -29,7 +29,7 @@ public class DemoDao {
 		DemoPojo dp = new DemoPojo();
 		dp.setAmount(new BigDecimal(System.currentTimeMillis()));
 		dp.setCreateDate(new Date());
-		dp.setId(new Integer((int)System.currentTimeMillis()));
+		dp.setId((int) (Math.random()*100));
 		dp.setRemark(System.currentTimeMillis()+"");
 		sessionTemplate.insert("demo.insertDemo", dp);
 	}

@@ -67,15 +67,13 @@
 		<property name="connectionProperties" value="config.decrypt=false" />
 	</bean>
 	
-	<rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
-    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>
+	<rdb:strategy id="databaseShardingStrategy" sharding-columns="createdate" algorithm-class="com.mss.sharding.algorithm.MultipleKeyDatabaseSharding"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="id,amount" algorithm-class="com.mss.sharding.algorithm.MultipleKeysTableSharding"/>
     
     <rdb:data-source id="shardingDataSource">
-        <rdb:sharding-rule data-sources="dataSource_0 dataSource_1" id-generator-class="com.dangdang.ddframe.rdb.sharding.id.generator.self.CommonSelfIdGenerator">
+        <rdb:sharding-rule data-sources="dataSource_0,dataSource_1" >
             <rdb:table-rules>
-                <rdb:table-rule logic-table=demo actual-tables="demo_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
-                    <rdb:auto-increment-column column-name="order_id"/>
-                </rdb:table-rule>
+                <rdb:table-rule logic-table="demo" actual-tables="demo_0,demo_1" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy"/>
             </rdb:table-rules>
         </rdb:sharding-rule>
     </rdb:data-source>
