@@ -1,4 +1,4 @@
-package com.mss.web.task;
+package com.mss.web.quartz;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

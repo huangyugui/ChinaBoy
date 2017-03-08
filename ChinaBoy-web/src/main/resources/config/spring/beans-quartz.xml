@@ -12,7 +12,7 @@
 		<!-- fail-over 是否重新执行非正常关闭的任务(存在于表QRTZ_FIRED_TRIGGERS),default=false -->
 		<property name="requestsRecovery" value="false" />
 		<!-- class类型,不是实体 -->
-		<property name="jobClass" value="com.mss.web.task.TestTask"/>
+		<property name="jobClass" value="com.mss.web.quartz.TestTask"/>
 		<property name="name" value="测试quartz集群"/>
 	</bean>
 
