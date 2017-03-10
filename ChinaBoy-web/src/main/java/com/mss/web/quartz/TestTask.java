@@ -20,6 +20,6 @@ public class TestTask extends QuartzJobBean {
 	@Override
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
-		logger.info("------------------task start --------------------");
+		logger.info("------------------quartz start --------------------");
 	}
 }
