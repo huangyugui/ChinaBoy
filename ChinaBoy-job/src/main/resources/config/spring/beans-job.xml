@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+	xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+           http://www.dangdang.com/schema/ddframe/reg
+           http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+           http://www.dangdang.com/schema/ddframe/job
+           http://www.dangdang.com/schema/ddframe/job/job.xsd">
+	
+	<!-- 配置作业注册中心 -->
+	<!-- 
+		 namespace:zookeeper命名空间
+		 base-sleep-time-milliseconds:等待重试的间隔时间的初始值,单位：毫秒,默认1000
+		 max-sleep-time-milliseconds:等待重试的间隔时间的最大值,单位：毫秒,默认3000
+		 max-retries:最大重试次数,最大重试次数,默认3
+		 session-timeout-milliseconds:会话超时时间,单位：毫秒,默认60000
+		 connection-timeout-milliseconds:连接超时时间,单位：毫秒,默认15000
+		 digest:连接zookeeper的权限令牌,默认不需要权限验证
+	-->
+	<reg:zookeeper id="regCenter" server-lists="${job.zookeeper.hosts}"
+		namespace="chinaboy-job" base-sleep-time-milliseconds="1000"
+		max-sleep-time-milliseconds="3000" max-retries="3" />
+	
+	<!-- 配置简单作业 -->
+	<!-- 
+		 cron:cron表达式，用于配置作业触发时间
+		 sharding-total-count:作业分片总数
+		 sharding-item-parameters:分片序列号和参数用等号分隔，多个键值对用逗号分隔分片序列号从0开始，
+		 		不可大于或等于作业分片总数如：0=a,1=b,2=c
+		 job-parameter:作业自定义参数，可通过传递该参数为作业调度的业务方法传参，用于实现带参数的作业
+				例：每次获取的数据量、作业实例从数据库读取的主键等
+		 monitor-execution:默认:true,监控作业运行时状态
+				每次作业执行时间和间隔时间均非常短的情况，建议不监控作业运行时状态以提升效率。因为是瞬时状态，
+				所以无必要监控。请用户自行增加数据堆积监控。并且不能保证数据重复选取，应在作业中实现幂等性。
+				每次作业执行时间和间隔时间均较长的情况，建议监控作业运行时状态，可保证数据不会重复选取。
+		 monitor-port:默认:-1,作业监控端口,建议配置作业监控端口, 方便开发者dump作业信息。使用方法: 
+		 		echo “dump” | nc 127.0.0.1 9888
+		 max-time-diff-seconds:默认:-1,最大允许的本机与注册中心的时间误差秒数,如果时间误差超过配置
+		 		秒数则作业启动时将抛异常,配置为-1表示不校验时间误差
+		 failover:默认:false,是否开启失效转移,仅monitorExecution开启，失效转移才有效
+		 misfire:默认:true,是否开启错过任务重新执行
+		 job-sharding-strategy-class:默认:true,作业分片策略实现类全路径,默认使用平均分配策略
+		 description:作业描述信息
+		 disabled:默认:false,作业是否禁止启动,可用于部署作业时，先禁止启动，部署结束后统一启动
+		 overwrite:默认:false,本地配置是否可覆盖注册中心配置,如果可覆盖，每次启动作业都以本地配置为准
+		 job-exception-handler:扩展异常处理类
+		 executor-service-handler:扩展作业处理线程池类
+		 event-trace-rdb-data-source:作业事件追踪的数据源Bean引用
+		 reconcile-interval-minutes:修复作业服务器不一致状态服务调度间隔分钟数，配置为-1表示不执行修复。
+	-->
+	<job:simple id="simpleElasticJob" class="xxx.MySimpleElasticJob"
+		registry-center-ref="regCenter" cron="0/10 * * * * ?"
+		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" />
+	
+	<!-- 配置数据流作业 -->
+	<!-- 
+		streaming-process:默认:false,是否流式处理数据,如果流式处理数据,
+		则fetchData不返回空结果将持续执行作业,如果非流式处理数据,则处理数据完成后作业结束
+	-->
+	<job:dataflow id="throughputDataflow" class="xxx.MyThroughputDataflowElasticJob"
+		registry-center-ref="regCenter" cron="0/10 * * * * ?"
+		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" />
+		
+	<!-- 配置脚本作业 -->
+	<!-- 
+		 script-command-line:脚本型作业执行命令行
+	-->
+	<job:script id="scriptElasticJob" registry-center-ref="regCenter"
+		cron="0/10 * * * * ?" sharding-total-count="3"
+		sharding-item-parameters="0=A,1=B,2=C" script-command-line="/your/file/path/demo.sh" />
+	
+	<!-- 配置带监听的简单作业 -->
+	<job:simple id="listenerElasticJob" class="xxx.MySimpleListenerElasticJob"
+		registry-center-ref="regCenter" cron="0/10 * * * * ?"
+		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C">
+		<job:listener class="xx.MySimpleJobListener" />
+		<job:distributed-listener class="xx.MyOnceSimpleJobListener"
+			started-timeout-milliseconds="1000" completed-timeout-milliseconds="2000" />
+	</job:simple>
+	
+	<!-- 配置带作业数据库事件追踪的简单作业 -->
+	<job:simple id="listenerElasticJob" class="xxx.MySimpleListenerElasticJob"
+		registry-center-ref="regCenter" cron="0/10 * * * * ?"
+		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C"
+		event-trace-rdb-data-source="yourDataSource">
+	</job:simple>
+	
+</beans>
