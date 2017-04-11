@@ -148,6 +148,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>ChinaBoy</groupId>
+			<artifactId>ChinaBoy-job</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

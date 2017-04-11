@@ -50,41 +50,53 @@
 		 event-trace-rdb-data-source:作业事件追踪的数据源Bean引用
 		 reconcile-interval-minutes:修复作业服务器不一致状态服务调度间隔分钟数，配置为-1表示不执行修复。
 	-->
-	<job:simple id="simpleElasticJob" class="xxx.MySimpleElasticJob"
-		registry-center-ref="regCenter" cron="0/10 * * * * ?"
-		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" />
+	<!-- 分片简介
+		1.主从模式:将分片总数设置为1，并使用多于1台的服务器执行作业，作业将会以1主n从的方式执行。
+		一旦执行作业的服务器崩溃，等待执行的服务器将会在下次作业启动时替补执行。开启失效转移功能效果更好，
+		可以保证在本次作业执行时崩溃，备机立即启动替补执行。
+		2.分片模式:Elastic-Job-Lite也提供最灵活的方式，最大限度的提高执行作业的吞吐量。
+		将分片项设置为大于服务器的数量，最好是大于服务器倍数的数量，作业将会合理的利用分布式资源，
+		动态的分配分片项。例如：3台服务器，分成10片，则分片项分配结果为服务器A=0,1,2;服务器B=3,4,5;
+		服务器C=6,7,8,9。 如果服务器C崩溃，则分片项分配结果为服务器A=0,1,2,3,4;服务器B=5,6,7,8,9。
+		在不丢失分片项的情况下，最大限度的利用现有资源提高吞吐量。
+	-->
+	<job:simple id="simpleElasticJob" class="com.mss.job.TestSimpleJob"
+		registry-center-ref="regCenter" cron="0 * * * * ?"
+		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" 
+		event-trace-rdb-data-source="dataSource" overwrite="true" reconcile-interval-minutes="10">
+		<job:listener class="com.mss.job.listener.TestElasticJobListener" />
+		<!-- 节点监听器
+			started-timeout-milliseconds:最后一个作业执行前的执行方法的超时时间,单位：毫秒
+			completed-timeout-milliseconds:最后一个作业执行后的执行方法的超时时间,单位：毫秒
+		 -->
+		<job:distributed-listener class="com.mss.job.listener.TestDistributeOnceElasticJobListener"
+			started-timeout-milliseconds="1000" completed-timeout-milliseconds="2000" />
+	</job:simple>
 	
 	<!-- 配置数据流作业 -->
 	<!-- 
 		streaming-process:默认:false,是否流式处理数据,如果流式处理数据,
 		则fetchData不返回空结果将持续执行作业,如果非流式处理数据,则处理数据完成后作业结束
 	-->
-	<job:dataflow id="throughputDataflow" class="xxx.MyThroughputDataflowElasticJob"
-		registry-center-ref="regCenter" cron="0/10 * * * * ?"
-		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" />
+	<job:dataflow id="throughputDataflow" class="com.mss.job.TestDataflowJob"
+		registry-center-ref="regCenter" cron="0 * * * * ?"
+		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" 
+		event-trace-rdb-data-source="dataSource" overwrite="true" reconcile-interval-minutes="10">
+		<job:listener class="com.mss.job.listener.TestElasticJobListener" />
+		<!-- 节点监听器
+			started-timeout-milliseconds:最后一个作业执行前的执行方法的超时时间,单位：毫秒
+			completed-timeout-milliseconds:最后一个作业执行后的执行方法的超时时间,单位：毫秒
+		 -->
+		<job:distributed-listener class="com.mss.job.listener.TestDistributeOnceElasticJobListener"
+			started-timeout-milliseconds="1000" completed-timeout-milliseconds="2000" />
+	</job:dataflow>
 		
 	<!-- 配置脚本作业 -->
 	<!-- 
 		 script-command-line:脚本型作业执行命令行
 	-->
-	<job:script id="scriptElasticJob" registry-center-ref="regCenter"
+	<!-- <job:script id="scriptElasticJob" registry-center-ref="regCenter"
 		cron="0/10 * * * * ?" sharding-total-count="3"
-		sharding-item-parameters="0=A,1=B,2=C" script-command-line="/your/file/path/demo.sh" />
-	
-	<!-- 配置带监听的简单作业 -->
-	<job:simple id="listenerElasticJob" class="xxx.MySimpleListenerElasticJob"
-		registry-center-ref="regCenter" cron="0/10 * * * * ?"
-		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C">
-		<job:listener class="xx.MySimpleJobListener" />
-		<job:distributed-listener class="xx.MyOnceSimpleJobListener"
-			started-timeout-milliseconds="1000" completed-timeout-milliseconds="2000" />
-	</job:simple>
-	
-	<!-- 配置带作业数据库事件追踪的简单作业 -->
-	<job:simple id="listenerElasticJob" class="xxx.MySimpleListenerElasticJob"
-		registry-center-ref="regCenter" cron="0/10 * * * * ?"
-		sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C"
-		event-trace-rdb-data-source="yourDataSource">
-	</job:simple>
+		sharding-item-parameters="0=A,1=B,2=C" script-command-line="/your/file/path/demo.sh" /> -->
 	
 </beans>
