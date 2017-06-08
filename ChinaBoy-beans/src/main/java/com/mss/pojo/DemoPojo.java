@@ -3,12 +3,16 @@ package com.mss.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 测试实体
  * @author zt
  * @version 20160523
  *
  */
+@ApiModel(value="Demo对象")
 public class DemoPojo extends BasePojo{
 	
 	/**
@@ -16,9 +20,13 @@ public class DemoPojo extends BasePojo{
 	 */
 	private static final long serialVersionUID = 6696906297850793562L;
 	
+	@ApiModelProperty(value="demoId")
 	private Integer id;
+	@ApiModelProperty(value="demo金额")
 	private BigDecimal amount;
+	@ApiModelProperty(value="demo描述")
 	private String remark;
+	@ApiModelProperty(value="demo创建日期")
 	private Date createDate;
 	public Integer getId() {
 		return id;

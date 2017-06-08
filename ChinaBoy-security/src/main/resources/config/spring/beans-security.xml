@@ -7,7 +7,7 @@
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
 	<!--登录页面不过滤 ,这种方式不会经过过滤器链-->
-	<http pattern="/toSecurityLogin.htm" security="none" />
+	<http pattern="/toSecurityLogin" security="none" />
 	
 	<!-- auto-config="true" 会自动建立登录页面,基本认证，登出处理 
 		use-expressions="true" 默认启用EL表达式,access="hasRole('ROLE_USER')"
@@ -15,10 +15,10 @@
 	-->
 	<http auto-config="true" use-expressions="false">
 		<!-- 定义自定义登录页面以及登录url，以及用户名与密码参数名称 
-			login-page="/toLogin.htm" 自定义登录页面action,默认
+			login-page="/toLogin" 自定义登录页面action,默认
 			login-processing-url="/login" 自定义登录验证跳转,默认
 		-->
-		<form-login login-page="/toSecurityLogin.htm" login-processing-url="/securityLogin" 
+		<form-login login-page="/toSecurityLogin" login-processing-url="/securityLogin" 
 			username-parameter="s_username" password-parameter="s_password"
 			authentication-success-handler-ref="authenticationSuccessHandler"
 			authentication-failure-handler-ref="authenticationFailureHandler"
@@ -30,7 +30,7 @@
 		<!-- 登出处理,默认是/j_spring_security_logout 
 			   默认清除remember me的cookie以及持久化token记录
 		-->
-		<logout logout-url="/securityLogout" logout-success-url="/toSecurityLogin.htm" invalidate-session="true"/>
+		<logout logout-url="/securityLogout" logout-success-url="/toSecurityLogin" invalidate-session="true"/>
 		
 		<!-- session管理 
 			session-fixation-protection session固定攻击保护默认migrateSession
@@ -44,11 +44,11 @@
 			expired-url 拒绝登录后的跳转url
 		-->
 		<session-management session-fixation-protection="migrateSession">
-			<concurrency-control max-sessions="1" expired-url="/toSecurityLogin.htm"/>
+			<concurrency-control max-sessions="1" expired-url="/toSecurityLogin"/>
 		</session-management>
 		
 		<!-- 设置不添加过滤url-->
-		<!-- <intercept-url pattern="/toLogin.htm" filters="none"/> -->
+		<!-- <intercept-url pattern="/toLogin" filters="none"/> -->
 		
 		<!-- 记住用户登录token 
 			token-validity-seconds 有效时间(s)
