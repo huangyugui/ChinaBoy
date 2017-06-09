@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>com.test.Application</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.boot.legacy.context.web.SpringBootContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- 加载 SpringMVC 的配置文件 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
+		</init-param>
+		<!-- 应用启动时就加载这个servlet,并且第一个加载 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+ 
+	<!-- session-config包含一个子元素session-timeout.定义web站台中的session参数. -->
+	<session-config>
+		<!-- 定义这个web站台所有session的有效期限.单位为分钟 -->
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>
