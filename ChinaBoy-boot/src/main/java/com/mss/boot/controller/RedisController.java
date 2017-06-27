@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mss.boot.entity.User;
 import com.mss.boot.enums.BaseCodeEnum;
 import com.mss.boot.pojo.ResInfo;
 
@@ -57,9 +56,9 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public ResInfo<List<User>> add(@RequestParam(required=false) String key,
+	public ResInfo<Object> add(@RequestParam(required=false) String key,
 			@RequestParam(required=false) String value){
-		ResInfo<List<User>> resInfo = new ResInfo<List<User>>();
+		ResInfo<Object> resInfo = new ResInfo<Object>();
 		
 		redisTemplate.opsForValue().set(key, value, 30, TimeUnit.MINUTES);
 		
@@ -90,9 +89,9 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public ResInfo<List<User>> modify(@RequestParam(required=false) String key,
+	public ResInfo<Object> modify(@RequestParam(required=false) String key,
 			@RequestParam(required=false) String value){
-		ResInfo<List<User>> resInfo = new ResInfo<List<User>>();
+		ResInfo<Object> resInfo = new ResInfo<Object>();
 		
 		redisTemplate.opsForValue().set(key, value, 30, TimeUnit.MINUTES);
 		
@@ -107,8 +106,8 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/del", method=RequestMethod.POST)
-	public ResInfo<List<User>> del(@RequestParam(required=false) String key){
-		ResInfo<List<User>> resInfo = new ResInfo<List<User>>();
+	public ResInfo<Object> del(@RequestParam(required=false) String key){
+		ResInfo<Object> resInfo = new ResInfo<Object>();
 		
 		redisTemplate.delete(key);
 		

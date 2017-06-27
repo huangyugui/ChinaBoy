@@ -37,6 +37,11 @@ spring:
    #连接池中的最小空闲连接
    min-idle: 0
    
+ #rabbitmq配置
+ rabbitmq:
+  username: root
+  password: root
+   
 #mybatis配置
 mybatis:
  type-aliases-package: com.mss.boot.entity
