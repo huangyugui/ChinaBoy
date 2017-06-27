@@ -1,7 +1,7 @@
 #数据源配置
 spring:
  datasource:
-  url: jdbc:mysql://192.168.110.110:3306/chinaboy?useUnicode=yes&characterEncoding=UTF8
+  url: jdbc:mysql://192.168.110.110:3306/chinaboy_boot?useUnicode=yes&characterEncoding=UTF8
   username: chinaboy
   password: chinaboy
   type: com.alibaba.druid.pool.DruidDataSource
