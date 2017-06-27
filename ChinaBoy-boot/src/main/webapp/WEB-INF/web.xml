@@ -7,10 +7,15 @@
 	<!-- 支持web部署  -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>com.test.Application</param-value>
+		<param-value>com.mss.boot.Application</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.boot.legacy.context.web.SpringBootContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- 参数打印监听器  -->
+	<listener>
+		<listener-class>com.mss.boot.listener.RequestListener</listener-class>
 	</listener>
 	
 	<!-- 支持跨域访问CORS -->
@@ -53,9 +58,5 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
-
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-
+	
 </web-app>

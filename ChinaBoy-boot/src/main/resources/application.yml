@@ -21,10 +21,7 @@ spring:
   maxOpenPreparedStatements: 20
 #mybatis配置
 mybatis:
- configLocations: classpath:mapper/mybatis-config.xml
- mapperLocations: classpath:mapper/map*.xml
- typeAliasesPackage: com.test.mapper
-#spring mvc配置
-view:
- prefix: /WEB-INF/pages/
- suffix: .jsp
+ type-aliases-package: com.mss.boot.entity
+ mapper-locations: classpath:mapper/map*.xml
+mapper:
+ style: normal 

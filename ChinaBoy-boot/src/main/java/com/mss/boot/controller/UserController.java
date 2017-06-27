@@ -95,6 +95,18 @@ public class UserController extends BaseController{
 		
 		ResInfo<Object> resInfo = new ResInfo<Object>();
 		
+		if(StringUtil.isEmpty(name)){
+			resInfo.setCode(BaseCodeEnum.CODE_0002.getCode());
+			resInfo.setMsg(BaseCodeEnum.CODE_0002.getMsg());
+			return resInfo;
+		}
+		
+		if(StringUtil.isEmpty(password)){
+			resInfo.setCode(BaseCodeEnum.CODE_0003.getCode());
+			resInfo.setMsg(BaseCodeEnum.CODE_0003.getMsg());
+			return resInfo;
+		}
+		
 		Date date = new Date();
 		User user = new User();
 		user.setName(name);
@@ -120,6 +132,18 @@ public class UserController extends BaseController{
 			@RequestParam(required=false) String password){
 		
 		ResInfo<Object> resInfo = new ResInfo<Object>();
+		
+		if(id == null){
+			resInfo.setCode(BaseCodeEnum.CODE_0001.getCode());
+			resInfo.setMsg(BaseCodeEnum.CODE_0001.getMsg());
+			return resInfo;
+		}
+		
+		if(StringUtil.isEmpty(password)){
+			resInfo.setCode(BaseCodeEnum.CODE_0003.getCode());
+			resInfo.setMsg(BaseCodeEnum.CODE_0003.getMsg());
+			return resInfo;
+		}
 		
 		Date date = new Date();
 		User user = new User();
@@ -162,6 +186,12 @@ public class UserController extends BaseController{
 	public ResInfo<Object> remove(@RequestParam Long id){
 		
 		ResInfo<Object> resInfo = new ResInfo<Object>();
+		
+		if(id == null){
+			resInfo.setCode(BaseCodeEnum.CODE_0001.getCode());
+			resInfo.setMsg(BaseCodeEnum.CODE_0001.getMsg());
+			return resInfo;
+		}
 		
 		User user = new User();
 		user.setId(id);
