@@ -93,6 +93,12 @@ public class User implements Serializable{
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", lastLoginDate=" + lastLoginDate
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+	}
 	
 	
 }
