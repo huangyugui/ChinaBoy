@@ -16,8 +16,7 @@ public class AmqpListener {
 	public void handle(User user, Channel channel){
 		try {
 			System.out.println("接收到消息:"+user);
-			System.out.println("接收到消息序号:"+channel.messageCount(AmqpConfig.DIRECTQUEUE));
-			channel.basicAck(channel.getNextPublishSeqNo(), false);//手动确认消息,队列中持久化的消息会被删除
+			//channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);//手动确认消息,队列中持久化的消息会被删除
 			//channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
 			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认消息,消息会被无限次重新接收,直到确认消息
 			//throw new RuntimeException("测试异常是否重新接收");//抛出运行异常时,消息不会被重新接收
