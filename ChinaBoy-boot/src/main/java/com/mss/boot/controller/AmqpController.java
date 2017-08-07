@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mss.boot.config.AmqpConfig;
 import com.mss.boot.entity.User;
 import com.mss.boot.enums.BaseCodeEnum;
-import com.mss.boot.pojo.ResInfo;
+import com.mss.boot.vo.BaseRes;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,9 +34,9 @@ public class AmqpController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/send", method=RequestMethod.POST)
-	public ResInfo<Object> send(@RequestParam(required=false) String msg){
+	public BaseRes<Object> send(@RequestParam(required=false) String msg){
 		
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		User user = new User();
 		user.setName(msg);

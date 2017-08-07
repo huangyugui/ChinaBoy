@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mss.boot.enums.BaseCodeEnum;
-import com.mss.boot.pojo.ResInfo;
+import com.mss.boot.vo.BaseRes;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -32,8 +32,8 @@ public class RedisController extends BaseController{
 	@ApiOperation(value="查询redis缓存所有数据")
 	@ResponseBody
 	@RequestMapping(value="/listAll", method=RequestMethod.GET)
-	public ResInfo<List<String>> listAll(){
-		ResInfo<List<String>> resInfo = new ResInfo<List<String>>();
+	public BaseRes<List<String>> listAll(){
+		BaseRes<List<String>> resInfo = new BaseRes<List<String>>();
 		List<String> list = new ArrayList<String>();
 
 		Set<String> set = redisTemplate.keys("*");
@@ -56,9 +56,9 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public ResInfo<Object> add(@RequestParam(required=false) String key,
+	public BaseRes<Object> add(@RequestParam(required=false) String key,
 			@RequestParam(required=false) String value){
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		redisTemplate.opsForValue().set(key, value, 30, TimeUnit.MINUTES);
 		
@@ -73,8 +73,8 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/get", method=RequestMethod.GET)
-	public ResInfo<String> get(@RequestParam(required=false) String key){
-		ResInfo<String> resInfo = new ResInfo<String>();
+	public BaseRes<String> get(@RequestParam(required=false) String key){
+		BaseRes<String> resInfo = new BaseRes<String>();
 		
 		resInfo.setCode(BaseCodeEnum.CODE_0000.getCode());
 		resInfo.setMsg(BaseCodeEnum.CODE_0000.getMsg());
@@ -89,9 +89,9 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public ResInfo<Object> modify(@RequestParam(required=false) String key,
+	public BaseRes<Object> modify(@RequestParam(required=false) String key,
 			@RequestParam(required=false) String value){
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		redisTemplate.opsForValue().set(key, value, 30, TimeUnit.MINUTES);
 		
@@ -106,8 +106,8 @@ public class RedisController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/del", method=RequestMethod.POST)
-	public ResInfo<Object> del(@RequestParam(required=false) String key){
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+	public BaseRes<Object> del(@RequestParam(required=false) String key){
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		redisTemplate.delete(key);
 		

@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mss.boot.entity.User;
 import com.mss.boot.enums.BaseCodeEnum;
 import com.mss.boot.mapper.UserMapper;
-import com.mss.boot.pojo.PageInfo;
-import com.mss.boot.pojo.ResInfo;
+import com.mss.boot.vo.BaseRes;
+import com.mss.boot.vo.PageData;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,12 +44,12 @@ public class UserController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public ResInfo<PageInfo<User>> list(@RequestParam(required=false) String id,
+	public BaseRes<PageData<User>> list(@RequestParam(required=false) String id,
 			@RequestParam(required=false) String name,
 			@RequestParam(required=false) String page,
 			@RequestParam(required=false) String rows){
 
-		ResInfo<PageInfo<User>> resInfo = new ResInfo<PageInfo<User>>();
+		BaseRes<PageData<User>> resInfo = new BaseRes<PageData<User>>();
 		
 		Example example = new Example(User.class);
 		Criteria criteria = example.createCriteria();
@@ -62,7 +63,7 @@ public class UserController extends BaseController{
 		getPageRows(page,rows);
 		
 		List<User> list = userMapper.selectByExampleAndRowBounds(example, new RowBounds(curPage, curRows));
-		PageInfo<User> pageInfo = new PageInfo<User>();
+		PageData<User> pageInfo = new PageData<User>();
 		pageInfo.setTotal(userMapper.selectCountByExample(example));
 		pageInfo.setRows(list);
 
@@ -75,8 +76,8 @@ public class UserController extends BaseController{
 	@ApiOperation(value="查询所有用户列表")
 	@ResponseBody
 	@RequestMapping(value="/listAll", method=RequestMethod.GET)
-	public ResInfo<List<User>> listAll(){
-		ResInfo<List<User>> resInfo = new ResInfo<List<User>>();
+	public BaseRes<List<User>> listAll(){
+		BaseRes<List<User>> resInfo = new BaseRes<List<User>>();
 		resInfo.setCode(BaseCodeEnum.CODE_0000.getCode());
 		resInfo.setMsg(BaseCodeEnum.CODE_0000.getMsg());
 		resInfo.setBody(userMapper.selectAll());
@@ -88,12 +89,13 @@ public class UserController extends BaseController{
 		@ApiImplicitParam(name="name", value="登录名称", required=true, dataType="String"),
 		@ApiImplicitParam(name="password", value="登录密码", required=true, dataType="String")
 	})
+	@Transactional(rollbackFor=Exception.class)
 	@ResponseBody
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public ResInfo<Object> add(@RequestParam(required=false) String name,
-			@RequestParam(required=false) String password){
+	public BaseRes<Object> add(@RequestParam(required=false) String name,
+			@RequestParam(required=false) String password) throws Exception{
 		
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		if(StringUtil.isEmpty(name)){
 			resInfo.setCode(BaseCodeEnum.CODE_0002.getCode());
@@ -115,7 +117,6 @@ public class UserController extends BaseController{
 		user.setCreateDate(date);
 		user.setUpdateDate(date);
 		userMapper.insert(user);
-		
 		resInfo.setCode(BaseCodeEnum.CODE_0000.getCode());
 		resInfo.setMsg(BaseCodeEnum.CODE_0000.getMsg());
 		return resInfo;
@@ -128,10 +129,10 @@ public class UserController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public ResInfo<Object> modify(@RequestParam(required=false) Long id,
+	public BaseRes<Object> modify(@RequestParam(required=false) Long id,
 			@RequestParam(required=false) String password){
 		
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		if(id == null){
 			resInfo.setCode(BaseCodeEnum.CODE_0001.getCode());
@@ -163,9 +164,9 @@ public class UserController extends BaseController{
 		})
 	@ResponseBody
 	@RequestMapping(value="/get", method=RequestMethod.GET)
-	public ResInfo<User> get(@RequestParam Long id){
+	public BaseRes<User> get(@RequestParam Long id){
 		
-		ResInfo<User> resInfo = new ResInfo<User>();
+		BaseRes<User> resInfo = new BaseRes<User>();
 		
 		User user = new User();
 		user.setId(id);
@@ -183,9 +184,9 @@ public class UserController extends BaseController{
 	})
 	@ResponseBody
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
-	public ResInfo<Object> remove(@RequestParam Long id){
+	public BaseRes<Object> remove(@RequestParam Long id){
 		
-		ResInfo<Object> resInfo = new ResInfo<Object>();
+		BaseRes<Object> resInfo = new BaseRes<Object>();
 		
 		if(id == null){
 			resInfo.setCode(BaseCodeEnum.CODE_0001.getCode());

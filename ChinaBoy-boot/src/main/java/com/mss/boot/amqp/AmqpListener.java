@@ -2,6 +2,8 @@ package com.mss.boot.amqp;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import com.mss.boot.config.AmqpConfig;
@@ -12,27 +14,38 @@ import com.rabbitmq.client.Channel;
 @RabbitListener(queues=AmqpConfig.DIRECTQUEUE)
 public class AmqpListener {
 
+	/**
+	 * 接收User对象消息
+	 * @param user
+	 * @param deliveryTag
+	 * @param channel
+	 */
 	@RabbitHandler
-	public void handle(User user, Channel channel){
+	public void handle(User user, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag, Channel channel){
 		try {
 			System.out.println("接收到消息:"+user);
-			//channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);//手动确认消息,队列中持久化的消息会被删除
+			channel.basicAck(deliveryTag, false);//deliveryTag为消息序列号,手动确认消息,队列中持久化的消息会被删除
 			//channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
-			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认消息,消息会被无限次重新接收,直到确认消息
+			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认多条小于deliveryTag序列消息,消息会被无限次重新接收,直到确认消息
 			//throw new RuntimeException("测试异常是否重新接收");//抛出运行异常时,消息不会被重新接收
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * 接收String消息
+	 * @param msg
+	 * @param deliveryTag
+	 * @param channel
+	 */
 	@RabbitHandler
-	public void handle(String msg, Channel channel){
+	public void handle(String msg, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag, Channel channel){
 		try {
 			System.out.println("接收到消息:"+msg);
-			System.out.println("接收到消息序号:"+channel.getNextPublishSeqNo());
-			channel.basicAck(channel.getNextPublishSeqNo(), false);//手动确认消息,队列中持久化的消息会被删除
+			channel.basicAck(deliveryTag, false);//deliveryTag为消息序列号,手动确认消息,队列中持久化的消息会被删除
 			//channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
-			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认消息,消息会被无限次重新接收,直到确认消息
+			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认多条小于deliveryTag序列消息,消息会被无限次重新接收,直到确认消息
 			//throw new RuntimeException("测试异常是否重新接收");//抛出运行异常时,消息不会被重新接收
 		} catch (Exception e) {
 			e.printStackTrace();

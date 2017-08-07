@@ -1,10 +1,10 @@
-package com.mss.boot.pojo;
+package com.mss.boot.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value="响应对象")
-public class ResInfo<T> {
+public class BaseRes<T> {
 
 	@ApiModelProperty(value="响应码")
 	private String code;
