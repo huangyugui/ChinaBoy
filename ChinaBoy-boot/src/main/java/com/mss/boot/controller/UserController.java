@@ -7,7 +7,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mss.boot.entity.User;
 import com.mss.boot.enums.BaseCodeEnum;
 import com.mss.boot.mapper.UserMapper;
+import com.mss.boot.service.UserService;
 import com.mss.boot.vo.BaseRes;
 import com.mss.boot.vo.PageData;
 
@@ -34,6 +34,9 @@ public class UserController extends BaseController{
 	    
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserService userService;
 	
 	@ApiOperation(value="分页查询用户列表")
 	@ApiImplicitParams({
@@ -89,7 +92,6 @@ public class UserController extends BaseController{
 		@ApiImplicitParam(name="name", value="登录名称", required=true, dataType="String"),
 		@ApiImplicitParam(name="password", value="登录密码", required=true, dataType="String")
 	})
-	@Transactional(rollbackFor=Exception.class)
 	@ResponseBody
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public BaseRes<Object> add(@RequestParam(required=false) String name,
@@ -116,7 +118,8 @@ public class UserController extends BaseController{
 		user.setLastLoginDate(date);
 		user.setCreateDate(date);
 		user.setUpdateDate(date);
-		userMapper.insert(user);
+		userService.add(user);
+		
 		resInfo.setCode(BaseCodeEnum.CODE_0000.getCode());
 		resInfo.setMsg(BaseCodeEnum.CODE_0000.getMsg());
 		return resInfo;
@@ -151,7 +154,7 @@ public class UserController extends BaseController{
 		user.setId(id);
 		user.setPassword(DigestUtils.md5Hex(password));
 		user.setUpdateDate(date);
-		userMapper.updateByPrimaryKeySelective(user);
+		userService.modify(user);
 		
 		resInfo.setCode(BaseCodeEnum.CODE_0000.getCode());
 		resInfo.setMsg(BaseCodeEnum.CODE_0000.getMsg());
@@ -196,7 +199,7 @@ public class UserController extends BaseController{
 		
 		User user = new User();
 		user.setId(id);
-		userMapper.delete(user);
+		userService.remove(user);
 
 		resInfo.setCode(BaseCodeEnum.CODE_0000.getCode());
 		resInfo.setMsg(BaseCodeEnum.CODE_0000.getMsg());
