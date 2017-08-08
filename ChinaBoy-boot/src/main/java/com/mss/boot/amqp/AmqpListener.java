@@ -25,8 +25,8 @@ public class AmqpListener {
 		try {
 			System.out.println("接收到消息:"+user);
 			channel.basicAck(deliveryTag, false);//deliveryTag为消息序列号,手动确认消息,队列中持久化的消息会被删除
-			//channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
-			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认多条小于deliveryTag序列消息,消息会被无限次重新接收,直到确认消息
+			//channel.basicReject(deliveryTag, true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
+			//channel.basicNack(deliveryTag, false, true);//手动否认多条小于deliveryTag序列消息,消息会被无限次重新接收,直到确认消息
 			//throw new RuntimeException("测试异常是否重新接收");//抛出运行异常时,消息不会被重新接收
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,8 +44,8 @@ public class AmqpListener {
 		try {
 			System.out.println("接收到消息:"+msg);
 			channel.basicAck(deliveryTag, false);//deliveryTag为消息序列号,手动确认消息,队列中持久化的消息会被删除
-			//channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
-			//channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);//手动否认多条小于deliveryTag序列消息,消息会被无限次重新接收,直到确认消息
+			//channel.basicReject(deliveryTag, true);//手动否认一条消息,消息会被无限次重新接收,直到确认消息
+			//channel.basicNack(deliveryTag, false, true);//手动否认多条小于deliveryTag序列消息,消息会被无限次重新接收,直到确认消息
 			//throw new RuntimeException("测试异常是否重新接收");//抛出运行异常时,消息不会被重新接收
 		} catch (Exception e) {
 			e.printStackTrace();
